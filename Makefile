@@ -16,7 +16,7 @@ clean:
 	(cd shapeLib; make clean)
 	(cd p2swLib; make clean)
 	(cd p2sw-demo; make clean)
-	(cd shape-motion-demo; make clean)
+	(cd pong-project; make clean)
 	(cd circleLib; make clean)
 	rm -rf lib h
 	rm -rf doxygen_docs/*
