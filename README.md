@@ -16,6 +16,11 @@ $ make load
 
 To play the game: 
 
-switches s1 and s2 move red paddle left and right and s3 and s4 move the blue paddle left and right.
+Player 1: RED Paddle
+Player 2: GREEN Paddle
+
+Switches s1 and s2 move the RED paddle left and right 
+
+Switches s3 and s4 move the GREEN paddle left and right
 
 Any of the two players that score 4 points will win the game and a gameover followed by which player won will print in the screen,
