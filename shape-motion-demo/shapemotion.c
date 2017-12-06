@@ -1,10 +1,12 @@
 /** \file shapemotion.c
  *  \brief This is a simple shape motion demo.
- *  This demo creates two layers containing shapes.
- *  One layer contains a rectangle and the other a circle.
+ *  This demo creates 3 layers containing shapes.
+ *  One layer contains a circle for the ball and two layers contains rectangle 
  *  While the CPU is running the green LED is on, and
  *  when the screen does not need to be redrawn the CPU
  *  is turned off along with the green LED.
+ *  This code heavily borrows from Demo Codes and from 
+ *  the code found on ramartinez12 repository: MSP430-Ping-Pong-Game
  */  
 #include <msp430.h>
 #include <libTimer.h>
@@ -263,7 +265,7 @@ void wdt_c_handler()
   count ++;
   
   if(gameOver == 1){
-  if (count == 15) {
+  if (count == 20) {
       buzzer_set_period(0);
       mlAdvance(&ml1, &fieldFence, &player1Fence, &player2Fence);
       u_int switches = p2sw_read(), i;
