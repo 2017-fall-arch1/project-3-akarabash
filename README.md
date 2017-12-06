@@ -17,6 +17,7 @@ $ make load
 To play the game: 
 
 Player 1: RED Paddle
+
 Player 2: GREEN Paddle
 
 Switches s1 and s2 move the RED paddle left and right 
