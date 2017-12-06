@@ -13,15 +13,16 @@
 #include <p2switches.h>
 #include <shape.h>
 #include <abCircle.h>
+//#include "gameOverSong.s"
 
 #define GREEN_LED BIT6
 
 //these variables are used to keep score of each player and if the game is still going on or not
 int redScore = 0;
-int blueScore = 0;
+int greenScore = 0;
 int gameOver = 1;
 
-AbRect rect10 = {abRectGetBounds, abRectCheck, {15,1}}; /**< paddles size set to 15x1 */
+AbRect rect10 = {abRectGetBounds, abRectCheck, {16,1}}; /**< paddles size set to 15x1 */
 
 AbRectOutline fieldOutline = {	/* playing field */
   abRectOutlineGetBounds, abRectOutlineCheck,   
@@ -32,7 +33,7 @@ Layer player2 = {               //this is the layer of the paddle for player 2
   (AbShape *)&rect10,
   {102, 148},                   //start position of the paddle 
   {0,0},{0,0},				    /* last & next pos */
-  COLOR_BLUE,
+  COLOR_GREEN,
   0
 };
   
@@ -41,7 +42,7 @@ Layer layer3 = {		/**< Layer of the ball for pong*/
   (AbShape *)&circle3,
   {(screenWidth/2)+5, (screenHeight/2)+10}, /**< start position of the ball, middle of the screen */
   {0,0}, {0,0},				    /* last & next pos */
-  COLOR_BLACK,
+  COLOR_PURPLE,
   &player2,
 };
 
@@ -50,7 +51,7 @@ Layer fieldLayer = {		/* playing field as a layer */
   (AbShape *) &fieldOutline,
   {screenWidth/2, screenHeight/2},/**< center */
   {0,0}, {0,0},				    /* last & next pos */
-  COLOR_BLACK,
+  COLOR_WHITE,
   &layer3
 };
 
@@ -142,14 +143,14 @@ void mlAdvance(MovLayer *ml, Region *fence, Region *redBar, Region *blueBar)
     }
     
     if ((shapeBoundary.topLeft.axes[1] < fence->topLeft.axes[1]) || //if the ball touche the top or botton wall
-        (shapeBoundary.botRight.axes[1] > fence->botRight.axes[1])){ //the ball resets in the middle of the 
+        (shapeBoundary.botRight.axes[1] >= fence->botRight.axes[1])){ //the ball resets in the middle of the 
                                                                     //screen
         newPos.axes[1] = (screenHeight/2)+5;
         newPos.axes[0] = (screenWidth/2)+10;
         }
         
     if(shapeBoundary.topLeft.axes[1] < fence->topLeft.axes[1]){ //these if statements update the score of each
-        blueScore++;                                            //player
+        greenScore++;                                            //player
     }
     if(shapeBoundary.botRight.axes[1] > fence->botRight.axes[1]){
         redScore++;
@@ -226,7 +227,7 @@ void main()
   
   //added this method call to print the player 1 and player 2 titles on the lcd screen
   drawString5x7(1,1, "player 1", COLOR_RED, COLOR_WHITE);
-  drawString5x7(80,152, "player 2", COLOR_BLUE, COLOR_WHITE);
+  drawString5x7(80,152, "player 2", COLOR_GREEN, COLOR_WHITE);
   //drawString5x7(screenWidth/2,screenHeight/2, "Who Dis", COLOR_LIME_GREEN, COLOR_WHITE);
 
 
@@ -297,9 +298,9 @@ void wdt_c_handler()
     } 
     
     //if statements that determine the score in the game, and when the game is finished or not
-    if(redScore == 0 && blueScore == 0){
+    if(redScore == 0 && greenScore == 0){
         drawString5x7(70,1, "Score: 0", COLOR_RED, COLOR_WHITE);
-        drawString5x7(1,152, "Score: 0", COLOR_BLUE, COLOR_WHITE);
+        drawString5x7(1,152, "Score: 0", COLOR_GREEN, COLOR_WHITE);
     } if(redScore == 1){
         drawString5x7(70,1, "Score: 1", COLOR_RED, COLOR_WHITE);
     } if(redScore == 2){
@@ -309,14 +310,14 @@ void wdt_c_handler()
     } if(redScore == 4){
         drawString5x7(70,1, "Score: 4", COLOR_RED, COLOR_WHITE);
         gameOver = 0;
-    } if(blueScore == 1){
-        drawString5x7(1, 152, "Score: 1", COLOR_BLUE, COLOR_WHITE);
-    } if(blueScore == 2){
-        drawString5x7(1, 152, "Score: 2", COLOR_BLUE, COLOR_WHITE);
-    } if(blueScore == 3){
-        drawString5x7(1, 152, "Score: 3", COLOR_BLUE, COLOR_WHITE);
-    } if(blueScore == 4){
-        drawString5x7(1, 152, "Score: 4", COLOR_BLUE, COLOR_WHITE);
+    } if(greenScore == 1){
+        drawString5x7(1, 152, "Score: 1", COLOR_GREEN, COLOR_WHITE);
+    } if(greenScore == 2){
+        drawString5x7(1, 152, "Score: 2", COLOR_GREEN, COLOR_WHITE);
+    } if(greenScore == 3){
+        drawString5x7(1, 152, "Score: 3", COLOR_GREEN, COLOR_WHITE);
+    } if(greenScore == 4){
+        drawString5x7(1, 152, "Score: 4", COLOR_GREEN, COLOR_WHITE);
         gameOver = 0;
     }
      //redrawScreen = 1;
@@ -333,7 +334,7 @@ void wdt_c_handler()
       //buzzer_init(0);
       clearScreen(COLOR_WHITE);
 START();
-} else if(blueScore == 4){
+} else if(greenScore == 4){
     
       drawString5x7(screenHeight/2-44,screenWidth/2, "GAME OVER", COLOR_BLACK, COLOR_WHITE);
       drawString5x7(screenHeight/2-50,screenWidth/2+20, "PLAYER 2 WINS", COLOR_BLACK, COLOR_WHITE);
