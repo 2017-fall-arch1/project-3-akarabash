@@ -29,17 +29,17 @@ STATE1: mov #2000, r12
         mov.b #1, &STATE
         JMP end
 
-STATE2: mov #5000, r12
+STATE2: mov #3000, r12
         CALL #buzzer_set_period,
         mov.b #2, &STATE
         JMP end
         
-STATE3: mov #3000, r12
+STATE3: mov #4000, r12
         CALL #buzzer_set_period,
         mov.b #3, &STATE
         JMP end
         
-STATE4: mov #4000, r12
+STATE4: mov #5000, r12
         CALL #buzzer_set_period,
         mov.b #4, &STATE
         JMP end
