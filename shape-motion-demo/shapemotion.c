@@ -150,6 +150,7 @@ void mlAdvance(MovLayer *ml, Region *fence, Region *redBar, Region *blueBar)
                                                                     //screen
         newPos.axes[1] = (screenHeight/2)+5;
         newPos.axes[0] = (screenWidth/2)+10;
+	int velocity = ml->velocity.axes[1] = -ml->velocity.axes[1];
         }
         
     if(shapeBoundary.topLeft.axes[1] < fence->topLeft.axes[1]){ //these if statements update the score of each
